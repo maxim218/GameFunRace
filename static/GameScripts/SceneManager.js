@@ -12,9 +12,10 @@ export default class SceneManager {
             Printer.print("Debug mode TRUE");
             this.createGrid();
             this.createLines();
-            this.setCameraWatchCar();
+            this.setTopPositionOfCamera();
         } else {
             Printer.print("Debug mode FALSE");
+            this.setCameraWatchCar();
         }
     }
 
@@ -24,7 +25,7 @@ export default class SceneManager {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(60, ww / hh, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setClearColor("#28a3ff");
+        this.renderer.setClearColor("#0d0d35");
         this.renderer.setSize(ww, hh);
         const gameBox = document.querySelector(".game-box");
         gameBox.append(this.renderer.domElement);
