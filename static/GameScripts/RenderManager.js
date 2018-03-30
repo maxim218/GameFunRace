@@ -27,6 +27,14 @@ export default class RenderManager {
     }
 
     /**
+     * направить взгяд камеры в начало координат
+     */
+    lookZero() {
+        // camera watch to starting world position
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    }
+
+    /**
      * метод для отрисовки мира
      */
     render() {
@@ -38,6 +46,8 @@ export default class RenderManager {
      */
     setTopPositionOfCamera() {
         this.setCameraPosition(0, DISTANCE, 0);
+        this.lookZero();
+        this.render();
     }
 
     /**
@@ -45,6 +55,8 @@ export default class RenderManager {
      */
     setFrontCameraPosition() {
         this.setCameraPosition(0, 0, DISTANCE);
+        this.lookZero();
+        this.render();
     }
 
     /**
@@ -52,8 +64,8 @@ export default class RenderManager {
      */
     setCameraWatchCar() {
         this.setCameraPosition(CAMERA_X, CAMERA_Y, CAMERA_Z);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        this.renderer.render(this.scene, this.camera);
+        this.lookZero();
+        this.render();
     }
 
     /**
@@ -64,7 +76,6 @@ export default class RenderManager {
      */
     setCameraPosition(xx, yy, zz) {
         PositionManager.setPosition(this.camera, xx, yy, zz);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        this.renderer.render(this.scene, this.camera);
+        this.render();
     }
 }

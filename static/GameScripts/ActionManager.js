@@ -3,12 +3,23 @@
 import Printer from "./Printer";
 import IntervalManager from "./IntervalManager";
 
+/**
+ * класс для управления процессом действия в игре
+ */
 export default class ActionManager {
+    /**
+     * конструктор
+     * @param sceneMainParams - объект, в котором хранятся объекты для взаимодействия со сценой
+     * @param gameElementsCreator - создатель объектов на сцене
+     */
     constructor(sceneMainParams, gameElementsCreator) {
         Printer.print("create ActionManager obj");
+        // инициализация объектов для взаимодействия со сценой
         this.scene = sceneMainParams.scene;
         this.camera = sceneMainParams.camera;
         this.renderer = sceneMainParams.renderer;
+        this.renderManager = sceneMainParams.renderManager;
+        // инициализация объекта для создание объектов в игре
         this.gameElementsCreator = gameElementsCreator;
         this.initParams();
         this.intervalManager = new IntervalManager();
@@ -30,31 +41,7 @@ export default class ActionManager {
 
 
     addKeyEvents() {
-        window.onkeydown = (event) => {
-            const n = event.keyCode;
-            if(n === 65) {
-                if(this.left === false && this.position !== -2) {
-                    this.left = true;
-                    this.position -= 1;
-                }
-            }
-            if(n === 68) {
-                if(this.right === false && this.position !== 2) {
-                    this.right = true;
-                    this.position += 1;
-                }
-            }
-        };
 
-        window.onkeyup = (event) => {
-            const n = event.keyCode;
-            if(n === 65) {
-                this.left = false;
-            }
-            if(n === 68) {
-                this.right = false;
-            }
-        };
     }
 
     moveLeftOrRightHeroCar() {
