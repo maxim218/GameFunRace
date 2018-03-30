@@ -13,13 +13,6 @@ export default class GameElementsCreator {
         this.createPlain();
         this.createLeftAndRightWalls();
         this.createHeroCar();
-
-
-        this.createCarEnemy_1(0, -20);
-        this.createCarEnemy_1(7, -20);
-        this.createCarEnemy_1(14, -20);
-        this.createCarEnemy_1(-7, -20);
-        this.createCarEnemy_1(-14, -20);
     }
 
     createLeftAndRightWalls() {
@@ -93,6 +86,10 @@ export default class GameElementsCreator {
         } );
     }
 
+    initEnemies(enemies) {
+        this.enemies = enemies;
+    }
+
     createCarEnemy_1(xx, zz) {
         const objectLoader = new THREE.ObjectLoader();
         objectLoader.load("./../GameModels/mycar_1.json", (car) => {
@@ -102,6 +99,7 @@ export default class GameElementsCreator {
             car.rotation.y = Math.PI;
             this.scene.add(car);
             this.renderer.render(this.scene, this.camera);
+            this.enemies.push(car);
         } );
     }
 }

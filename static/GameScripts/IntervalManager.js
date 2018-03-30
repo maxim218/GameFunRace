@@ -1,5 +1,7 @@
 "use strict";
 
+import Printer from "./Printer";
+
 let workingIntervalsNumber = 0;
 
 export function getWorkingIntervalsNumber() {
@@ -14,10 +16,12 @@ export default class IntervalManager {
     stop() {
         workingIntervalsNumber -= 1;
         clearInterval(this.interval);
+        Printer.print("Intervals working: " + workingIntervalsNumber);
     }
 
     start(action, time) {
         workingIntervalsNumber += 1;
         this.interval = setInterval(action, time);
+        Printer.print("Intervals working: " + workingIntervalsNumber);
     }
 }

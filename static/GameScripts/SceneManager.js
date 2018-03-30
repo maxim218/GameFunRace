@@ -1,72 +1,63 @@
 "use strict";
 
 import Printer from "./Printer";
+import RenderManager from "./RenderManager";
+
+const COLOR_FIRST = "#41ff71";
+const COLOR_SECOND = "#4013ff";
+const SIZE_OF_GRID = 70;
+const DIVISIONS = 14;
+const AXES_NUMBER = 200;
+const RENDER_COLOR = "#0d0d35";
+const CAMERA_ANGLE = 60;
+const BOX_CLASS_NAME = ".game-box";
 
 export default class SceneManager {
     constructor(sceneWidth, sceneHeight, debugMode) {
         Printer.print("create SceneManager obj");
+        // init size
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+
+        // create 3D world
         this.createScene();
+
+        // init render manager
+        this.renderManager = new RenderManager(this.scene, this.camera, this.renderer);
+
+        // if debug mode
         if(debugMode === true) {
-            Printer.print("Debug mode TRUE");
+            // create grid and lines objects
             this.createGrid();
             this.createLines();
-            this.setTopPositionOfCamera();
+            // set top position of camera
+            this.renderManager.setTopPositionOfCamera();
         } else {
-            Printer.print("Debug mode FALSE");
-            this.setCameraWatchCar();
+            // set camera position behind car
+            this.renderManager.setCameraWatchCar();
         }
+
+        // draw scene
+        this.renderManager.render();
     }
 
     createScene() {
-        const ww = this.sceneWidth;
-        const hh = this.sceneHeight;
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(60, ww / hh, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(CAMERA_ANGLE, this.sceneWidth / this.sceneHeight, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setClearColor("#0d0d35");
-        this.renderer.setSize(ww, hh);
-        const gameBox = document.querySelector(".game-box");
-        gameBox.append(this.renderer.domElement);
-        this.renderer.render(this.scene, this.camera);
+        this.renderer.setClearColor(RENDER_COLOR);
+        this.renderer.setSize(this.sceneWidth, this.sceneHeight);
+        document.querySelector(BOX_CLASS_NAME).append(this.renderer.domElement);
     }
 
     createGrid() {
-        const sizeOfGrid = 70;
-        const divisions = 14;
-        const color_1 = "#41ff71";
-        const color_2 = "#4013ff";
-        const gridHelper = new THREE.GridHelper(sizeOfGrid, divisions, color_1, color_2);
+        const gridHelper = new THREE.GridHelper(SIZE_OF_GRID, DIVISIONS, COLOR_FIRST, COLOR_SECOND);
         this.scene.add(gridHelper);
     }
 
     createLines() {
-        let axes = new THREE.AxisHelper(200);
+        let axes = new THREE.AxisHelper(AXES_NUMBER);
         this.scene.add(axes);
-    }
-
-    setTopPositionOfCamera() {
-        this.setCameraPosition(0, 80, 0);
-    }
-
-    setFrontCameraPosition() {
-        this.setCameraPosition(0, 0, 80);
-    }
-
-    setCameraWatchCar() {
-        this.setCameraPosition(0, 20, 45);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        this.renderer.render(this.scene, this.camera);
-    }
-
-    setCameraPosition(xx, yy, zz) {
-        const camera = this.camera;
-        camera.position.x = xx;
-        camera.position.y = yy;
-        camera.position.z = zz;
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
-        this.renderer.render(this.scene, this.camera);
     }
 
     getSceneMainParams() {
