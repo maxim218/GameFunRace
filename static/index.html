@@ -4,18 +4,32 @@
     <meta charset="UTF-8">
     <title>Game</title>
     <style>
+        body {
+            background-color: #0d0d35;
+        }
+
         .game-box {
-            margin: 0 auto;
-            padding: 0px;
+            padding: 0;
             width: 1000px;
             height: 750px;
-            background-color: #CCCCCC;
+            background-color: #0d0d35;
+        }
+
+        .center-box {
+            margin: 0 auto;
+            width: 1000px;
+            padding: 25px;
+            border-radius: 15px;
+            background-color: white;
+            height: 850px;
         }
     </style>
 </head>
 <body>
 
-<div class = "game-box"></div>
+<div class = "center-box">
+    <div class = "game-box"></div>
+</div>
 
 <script src = "./scriptsForThreeJS/three.min.js"></script>
 <script src = "./scriptsForThreeJS/Projector.js"></script>

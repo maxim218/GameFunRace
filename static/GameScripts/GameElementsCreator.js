@@ -126,11 +126,10 @@ export default class GameElementsCreator {
      * @param xx
      * @param zz
      */
-    createCarEnemy_1(xx, zz) {
+    createCarEnemy(xx, zz) {
         const objectLoader = new THREE.ObjectLoader();
         objectLoader.load("./../GameModels/mycar_1.json", (car) => {
             PositionManager.setPosition(car, xx, 0, zz);
-            car.rotation.y = Math.PI;
             this.scene.add(car);
             this.enemies.push(car);
         } );
