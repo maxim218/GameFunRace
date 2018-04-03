@@ -32,6 +32,9 @@ const LINES_ARRAY = [
 // флаг окончания игры
 let stop = false;
 
+// количество набранных очков
+let score = 0;
+
 /**
  * класс для управления процессом действия в игре
  */
@@ -48,6 +51,8 @@ export default class ActionManager {
         this.camera = sceneMainParams.camera;
         this.renderer = sceneMainParams.renderer;
         this.renderManager = sceneMainParams.renderManager;
+        // инициализация бокса для вывода количества очков
+        this.initPointsLabel();
         // инициализация объекта для создание объектов в игре
         this.gameElementsCreator = gameElementsCreator;
         // добавляем отслеживание нажатий на клавиши
@@ -60,6 +65,16 @@ export default class ActionManager {
         this.createEnemiesArray();
         // запускаем интервалы для вызовов функций через разные промеужтки времени
         this.startIntervals();
+    }
+
+    /**
+     * инициализиция бокса для вывода количества очков
+     */
+    initPointsLabel() {
+        // инициализируем бокс для вывода количества очков
+        this.pointsLabel = document.querySelector(".points-label");
+        // выводим на экран количество очков
+        this.pointsLabel.innerHTML = "Очки: " + score;
     }
 
     /**
@@ -107,9 +122,18 @@ export default class ActionManager {
                             if(count >= 50) {
                                 // очищаем интервал
                                 clearInterval(inter);
+                                // выводим надпись, что интервал очищен
+                                console.log("Clear interval OK");
+                                // делаем кнопку перезапуска видимой для пользователя игры
+                                document.querySelector(".restart-btn").hidden = false;
+                                // прячем кнопки A и D
+                                // пробегемся по всем экземплярам класса
+                                for(let i = 0; i < document.getElementsByClassName("key-button").length; i++) {
+                                    // прячем блок
+                                    document.getElementsByClassName("key-button")[i].hidden = true;
+                                }
                             }
                         }, FAST_INTERVAL_WORKING_SPEED);
-
                     }
                 }
             });
@@ -236,6 +260,11 @@ export default class ActionManager {
                 this.createLineOfEnemies();
                 // удаляем машинки, которые уже далеко уехали
                 this.deleteCars();
+                // увеличиваем количество набранных очков
+                score++;
+                // выводим на экран количество очков
+                this.pointsLabel.innerHTML = "Очки: " + score;
+
             }
         }, LOW_INTERVAL_WORKING_SPEED);
     }

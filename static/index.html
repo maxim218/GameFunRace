@@ -2,10 +2,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Game</title>
+    <title>Space Race</title>
     <style>
+        @font-face {
+            font-family: MaximFamily;
+            src: url(./GameFonts/9688.ttf);
+        }
+
         body {
             background-color: #0d0d35;
+            font-family: MaximFamily, serif;
+            font-size: 15px;
         }
 
         .game-box {
@@ -13,6 +20,8 @@
             width: 1000px;
             height: 750px;
             background-color: #0d0d35;
+            font-family: MaximFamily, serif;
+            font-size: 15px;
         }
 
         .center-box {
@@ -22,6 +31,44 @@
             border-radius: 15px;
             background-color: white;
             height: 850px;
+            font-family: MaximFamily, serif;
+            font-size: 15px;
+        }
+
+        .key-button {
+            padding: 15px 30px;
+            font-family: MaximFamily, serif;
+            color: black;
+            font-size: 35px;
+            background-color: #CCCCCC;
+            margin-right: 5px;
+            border-radius: 10px;
+        }
+
+        .points-label {
+            padding: 15px 30px;
+            font-family: MaximFamily, serif;
+            color: white;
+            font-size: 35px;
+            background-color: #0d0d35;
+            margin-right: 5px;
+            border-radius: 10px;
+        }
+
+        .restart-btn {
+            padding: 15px 30px;
+            font-family: MaximFamily, serif;
+            color: white;
+            font-size: 35px;
+            background-color: #5b74ce;
+            margin-right: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .game-menu-box {
+            margin-top: 25px;
+            font-size: 15px;
         }
     </style>
 </head>
@@ -29,7 +76,19 @@
 
 <div class = "center-box">
     <div class = "game-box"></div>
+    <div class = "game-menu-box">
+        <span class = "key-button">A</span>
+        <span class = "key-button">D</span>
+        <span class = "points-label"></span>
+        <span class = "restart-btn" onclick = "restartGame()" hidden>Играть ещё раз</span>
+    </div>
 </div>
+
+<script>
+    function restartGame() {
+        location.reload();
+    }
+</script>
 
 <script src = "./scriptsForThreeJS/three.min.js"></script>
 <script src = "./scriptsForThreeJS/Projector.js"></script>
